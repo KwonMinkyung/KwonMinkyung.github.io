@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>
+<style>
+*{margin:0; padding:0;}
+ul,li{list-style:none;}
+
+#TopSlider{width:100%; height:100vh;}
+#TopSlider div{width:100%; height:100vh; float:left; visibility:hidden; 
+	z-index:-10;position:absolute;overflow : hidden ;}
+#top_0{width:100%; height:100vh;}
+#top_1{width:100%; height:100vh;}
+#top_2{width:100%; height:100vh;}
+#top_3{width:100%; height:100vh;}
+li{text-align:center;}
+div>img{width:100%; height:100vh;}
+
+
+#TopSliderBtn{position:absolute; top:0; width:100%;left:0;}
+#ul_btns{float:left; width:100%;}
+#ul_btns a{float:left; width:25%; text-decoration: none;}
+#ul_btns .on{background-color:red;}
+
+
+</style>
+<script	src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script>
+
+    var intv;
+    var current = 0;
+    var sIdx = 0;
+	var sCnt =  6;
+	
+
+    function startTopSlider() {
+	    intv = setInterval(function () {
+            $("#ul_btns").find("a").eq(current++ % sCnt).click();
+        }, 2000);
+    }
+
+    function setBnr(idx, bnr, allTab, addCls) {
+        $(bnr).css("visibility", "hidden")
+              .eq(idx).css("visibility", "visible").animate("left");
+        $(allTab).removeClass(addCls);
+        $(allTab).eq(idx).addClass(addCls);
+    }
+
+    $(document).ready(function () {
+	    
+        //set init
+        $("#top_0").css("visibility", "visible");
+        //#top_0이 보임
+        $("#btn_0").addClass("on");
+        //btn_0에 class '.on'추가
+        startTopSlider();
+		
+		
+		$("#ul_btns").find("a").click(function(){
+			var idx = $(this).attr("id").split("_")[1];
+			//지금잡은 id의 "_"의 첫번째 인덱스
+			setBnr(idx, "#TopSlider > div" , "#ul_btns > a" , "on" );
+			// idx, #TopSlide바로아래의 div가 bnr함수값 호출, #ul_btn 바로아래의 a가 allTab함수값 호출, on 다음 idx추가
+			
+		});
+
+    });
+</script>
+
+</head>
+<body>
+
+	<div id="TopSlider">
+		<div id="top_0"><img src="assets/img/slider/1.jpg"></div>
+		<div id="top_1"><img src="assets/img/slider/2.jpg"></div>
+		<div id="top_2"><img src="assets/img/slider/3.jpg"></div>
+		<div id="top_3"><img src="assets/img/slider/4.jpg"></div>
+	</div>
+	<div id="TopSliderBtn">
+		<ul id="ul_btns">
+			<a href="#" id="btn_0"><li>0</li></a>
+			<a href="#" id="btn_1"><li>1</li></a>
+			<a href="#" id="btn_2"><li>2</li></a>
+			<a href="#" id="btn_3"><li>3</li></a>
+		</ul>
+	</div>
+	
+</body>
+</html>
+
